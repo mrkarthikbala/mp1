@@ -2,6 +2,7 @@ $(document).ready(function(){
 
     smoothScroll();
     quoteWheel();
+    navShrink();
     navIndicator();
     modal();
 });
@@ -14,22 +15,23 @@ $("#internalLinks a").click(function(e){
 }
 
     //Shrinks the nav bar when away from the top of the page
+var navShrink = function(){
   $(window).scroll(function(){
-    if ( $(document).scrollTop() > 50 ){
-      $("nav").css("height", "60px");
-      $("nav p").css("font-size", "10px");
-      $("nav h1").css("font-size", "20px")
-    }
-    else {
-      $("nav").css("height", "75px");
-      $("nav p").css("font-size", "15px");
-      $("nav h1").css("font-size", "36px");
+      if ( $(document).scrollTop() > 50 ){
+        $("nav").css("height", "60px");
+        $("nav p").css("font-size", "10px");
+        $("nav h1").css("font-size", "20px")
+      }
+      else {
+        $("nav").css("height", "75px");
+        $("nav p").css("font-size", "15px");
+        $("nav h1").css("font-size", "36px");
 
-    }
+      }
 
 
-    //navIndicator();
-    });
+      });
+}
 
 
 var navIndicator = function(){
