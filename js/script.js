@@ -54,20 +54,8 @@ var navIndicator = function(){
   
   
 var quoteWheel = function(){ 
-  var move = function(){
-    $("#quotes ul").animate({
-        $(this).css("marginLeft", -400);      //Move left by 1 element 
-      }, 1000, function(){  
-          var lastQuote = $(this).find("li").(children().last());       //Make the list a circle
-          var firstQuote = $(this).find("li").(children().first());
-          lastQuote.after(firstQuote);
-          
-          $(this).css("marginLeft", "0");                     //Move it
-      });
-  }
 
-  var interval = 8000;
-
+ 
   var playing = true;                  //Pause/unpause the animation based on the click of the button
   $("#pause").click(function(){
     if (playing){
@@ -80,10 +68,16 @@ var quoteWheel = function(){
   });
 
   setInterval(function(){
-    if (playing){                   //If we're supposed to be playing
-      move();
+    if (playing){   
+
+          $("#quotes ul").animate({marginLeft:-400}, 1000, function(){
+
+          $(this).find("li:last").after($(this).find("li:first"));    //Make the list a loop
+              
+          $(this).css("marginLeft", "0");     //Move it
+      });
     }
-    }, interval);
+    }, 8000);
 }
 
 var modal = function(){
