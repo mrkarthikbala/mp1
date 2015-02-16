@@ -1,8 +1,9 @@
 $(document).ready(function(){
 
     smoothScroll();
-    changeNavSize();
     quoteWheel();
+    navIndicator();
+    modal();
 });
 
 var smoothScroll= function(){
@@ -12,8 +13,7 @@ $("#internalLinks a").click(function(e){
   });
 }
 
-
-var changeNavSize = function(){     //Shrinks the nav bar when away from the top of the page
+    //Shrinks the nav bar when away from the top of the page
   $(window).scroll(function(){
     if ( $(document).scrollTop() > 50 ){
       $("nav").css("height", "60px");
@@ -30,41 +30,71 @@ var changeNavSize = function(){     //Shrinks the nav bar when away from the top
 
     //navIndicator();
     });
-}
+
 
 var navIndicator = function(){
 
   var divs = $("#internalLinks").children();
-  /*
-  for (int i = 0; i < divs.length; i++){
-    var thisDiv = divs.eq(1);
-    var nextDiv = divs.eq(4);
-    var documentPosition = $(document).scrollTop();
 
-    if ((documentPosition > $(thisDiv.attr('href')).offset().top-60) ){
-      thisDiv.css("background-color", "#E6772E");
+  var i = 0;
+  setInterval(function(){
+      var thisDiv = divs.eq(i);
+      if (($(document).scrollTop()> $(thisDiv.attr('href')).offset().top-100 && 
+        $(document).scrollTop() < $(divs.eq(i+1).attr('href')).offset().top-100) ){
+        thisDiv.css("background-color", "#E6772E");
+        }
+      else{
+        thisDiv.css("background-color", "#E64A45");
       }
-    else{
-      thisDiv.css("background-color", "#E64A45");
-    }
+      i++;
+      if (i === 5) i =0;
+    },50);
   }
-  */
   
-}
+  
+  
+var quoteWheel = function(){ 
+  var move = function(){
+    $("#quotes ul").animate({
+        $(this).css("marginLeft", -400);      //Move left by 1 element 
+      }, 1000, function(){  
+          var lastQuote = $(this).find("li").(children().last());       //Make the list a circle
+          var firstQuote = $(this).find("li").(children().first());
+          lastQuote.after(firstQuote);
+          
+          $(this).css("marginLeft", "0");                     //Move it
+      });
+  }
 
+  var interval = 8000;
 
-
-
-var quoteWheel = function(){  //Change.
-
+  var playing = true;                  //Pause/unpause the animation based on the click of the button
+  $("#pause").click(function(){
+    if (playing){
+      $(this).html("Continue");
+    }
+    else{
+      $(this).html("Pause");
+    }
+    playing = !playing;
+  });
 
   setInterval(function(){
-    $("#quotes ul").animate({marginLeft:-400},1000,function(){
-      $(this).find("li:last").after($(this).find("li:first"));
-      $(this).css({marginLeft:0});
-    });
-  },5000);
-
-
+    if (playing){                   //If we're supposed to be playing
+      move();
+    }
+    }, interval);
 }
-//http://www.my-html-codes.com/easy-jquery-carousel
+
+var modal = function(){
+  $("#openModal").click(function() {
+        $("#backgroundForModal").css("display", "block").fadeIn(1500);
+        $("#modalBox").css("display", "block").fadeIn("slow");
+    });
+  
+  $("#backgroundForModal").click(function(){
+        $("#modalBox").css("display", "block").fadeOut("slow");
+        $("#backgroundForModal").css("display", "block").fadeOut("slow");
+  });
+  
+}
