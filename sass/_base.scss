@@ -44,7 +44,7 @@ nav {
 
 /*Animation for my name*/
 .dance{
-	animation: upDown 10s linear 3s infinite alternate;
+	animation: upDown 5s linear 3s infinite alternate;
 }
 
 @keyframes upDown {
@@ -266,7 +266,8 @@ nav {
 }
 
 #pauseButton{
-	padding-top: 250px;
-	padding-right: 100px;
+	float: right;
+	padding-top: 400px;
+	padding-right: 200px;
 	position: relative;
 	}
